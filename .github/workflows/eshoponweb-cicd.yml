@@ -6,7 +6,7 @@ on: workflow_dispatch
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
   RESOURCE-GROUP: rg-eshoponweb-eastus
-  LOCATION: westindia
+  LOCATION: eastus
   TEMPLATE-FILE: infra/webapp.bicep
   SUBSCRIPTION-ID: 47855f24-8558-4a9d-bb04-34d73e08b8ba
   WEBAPP-NAME: devops-webapp-eastus-273963279
@@ -46,7 +46,7 @@ jobs:
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v4
       with:
-        name: bicep-template
+        name: bicep-template-2
         path: ${{ env.TEMPLATE-FILE }}
         
   # Use Bicep to deploy infrastructure + Publish webapp 
@@ -68,8 +68,8 @@ jobs:
     - name: Download artifact from build job
       uses: actions/download-artifact@v4
       with:
-        name: bicep-template
-        path: bicep-template
+        name: bicep-template-2
+        path: bicep-template-2
         
    #Login in your azure subscription using a service principal (credentials stored as GitHub Secret in repo)
     - name: Azure Login
@@ -83,7 +83,7 @@ jobs:
       with:
         subscriptionId: ${{ env.SUBSCRIPTION-ID }}
         resourceGroupName: ${{ env.RESOURCE-GROUP }}
-        template: bicep-template/webapp.bicep
+        template: bicep-template-2/webapp.bicep
         parameters: 'webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }}'
         failOnStdErr: false   
     
