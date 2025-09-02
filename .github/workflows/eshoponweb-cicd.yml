@@ -47,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: bicep-template
-        path: ${{ env.TEMPLATE-FILE }}
+        path: infra/webapp.bicep
         
   # Use Bicep to deploy infrastructure + Publish webapp 
   deploy:
@@ -83,7 +83,7 @@ jobs:
       with:
         subscriptionId: ${{ env.SUBSCRIPTION-ID }}
         resourceGroupName: ${{ env.RESOURCE-GROUP }}
-        template: bicep-template/webapp.bicep
+        template: bicep-template/infra/webapp.bicep
         parameters: >
           webAppName=${{ env.WEBAPP-NAME }}
           location=${{ env.LOCATION }}
